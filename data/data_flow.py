@@ -4,7 +4,7 @@ from typing import List, Any, Dict, Set
 
 import gspread
 
-from worksheets_update import create_list, delete_worksheet
+from sheets.worksheets_update import create_list, delete_worksheet
 
 
 def collect_categories(stocks: List) -> Any:

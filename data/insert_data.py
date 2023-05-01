@@ -3,7 +3,7 @@ from typing import Dict, List
 
 import gspread
 
-from worksheets_update import create_list, change_row_height
+from sheets.worksheets_update import create_list, change_row_height
 from data_flow import get_data
 
 

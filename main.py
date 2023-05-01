@@ -3,9 +3,9 @@ import datetime
 
 import gspread
 
-from data_flow import collect_categories, add_lists_categories
-from misc import read_files
-from insert_data import add_items_to_list, add_supplies_list
+from data.data_flow import collect_categories, add_lists_categories
+from files.misc import read_files
+from data.insert_data import add_items_to_list, add_supplies_list
 from config import CREDENTIALS_PATH, SHEET_NAME, STOCKS_PATH, ASSORTMENT_PATH
 
 

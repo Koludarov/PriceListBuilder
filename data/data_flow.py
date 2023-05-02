@@ -9,13 +9,14 @@ from sheets.worksheets_update import create_list, delete_worksheet
 
 def collect_categories(stocks: List) -> Any:
     """Собирает категории товаров и расходных материалов"""
-    category = set()
-    supplies = set()
+    category = set()  # Множество для сборки категорий
+    supplies = set()  # Множество для сборки Расходных материалов
     for stock_item in stocks:
         if 'Расходные материалы' in stock_item['folder']['pathName']:
             supplies.add(stock_item['folder']['name'])
         elif stock_item['folder']['pathName'] == 'Номенклатура':
             category.add(stock_item['folder']['name'])
+            # Ламинирование и Брови имеют подкатегории, для которых не создаются отдельные листы
         elif 'Ламинирование/' in stock_item['folder']['pathName']:
             continue
         elif 'Брови/' in stock_item['folder']['pathName']:

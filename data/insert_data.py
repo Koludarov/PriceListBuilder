@@ -23,6 +23,7 @@ def add_items_to_list(
             if external_code == assortment_item['externalCode']:
                 if stock_item['folder']['pathName'] == 'Номенклатура':
                     cat = stock_item['folder']['name']
+                # Ламинирование и Брови имеют подкатегории, которые записываются на общие листы
                 elif 'Номенклатура/Брови' in stock_item['folder']['pathName']:
                     cat = 'Брови'
                 elif 'Номенклатура/Ламинирование/' in stock_item['folder']['pathName']:
@@ -32,6 +33,7 @@ def add_items_to_list(
                            .replace('Номенклатура/', '').replace('/', '_').replace(' ', '_'))
                 row_data = get_data(assortment_item, stock_item)
 
+                # Заполняем словарь для категории Расходные материалы
                 if 'Расходные_материалы' in cat:
                     if stock_item['folder']['name'] in supplies:
                         supplies_storage['count'] += 1

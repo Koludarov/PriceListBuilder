@@ -74,7 +74,7 @@ def add_lists_categories(category: Set, sheet: gspread.spreadsheet.Spreadsheet) 
         if category_item in exceptions_category:
             exceptions_category.remove(category_item)
 
-    # Ждём минуту, чтобы прошло время с последнего запроса
+    # Ждём 2 минуты, чтобы прошло время с последнего запроса
     time.sleep(121)
     # Удаляем Лист1, который создаётся автоматически
     delete_worksheet('Лист1', sheet)

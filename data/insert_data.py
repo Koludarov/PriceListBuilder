@@ -1,10 +1,9 @@
-import time
 from typing import Dict, List
 
 import gspread
 
 from sheets.worksheets_update import create_list, change_row_height
-from data_flow import get_data
+from data.data_flow import get_data
 
 
 def add_items_to_list(
@@ -23,11 +22,6 @@ def add_items_to_list(
             if external_code == assortment_item['externalCode']:
                 if stock_item['folder']['pathName'] == 'Номенклатура':
                     cat = stock_item['folder']['name']
-                # Ламинирование и Брови имеют подкатегории, которые записываются на общие листы
-                elif 'Номенклатура/Брови' in stock_item['folder']['pathName']:
-                    cat = 'Брови'
-                elif 'Номенклатура/Ламинирование/' in stock_item['folder']['pathName']:
-                    cat = 'Ламинирование'
                 else:
                     cat = (stock_item['folder']['pathName']
                            .replace('Номенклатура/', '').replace('/', '_').replace(' ', '_'))
@@ -48,8 +42,6 @@ def add_items_to_list(
                     except gspread.exceptions.APIError as error:
                         print(f"Ошибка при создании {row_data[0]}. Описание: {error}")
                         exceptions_rows.append(row_data)
-                        print('Ждём минуту')
-                        time.sleep(61)
                 if row_data in exceptions_rows:
                     exceptions_rows.remove(row_data)
                 break
@@ -68,9 +60,6 @@ def add_supplies_list(
     amount = supplies_storage.pop('count') + len(supplies_storage.keys()) - 99
     if amount > 0:
         for i in range(amount):
-            if i % 60 == 0:
-                print('Ждём минуту чтобы не превысить кол-во запросов')
-                time.sleep(61)
             worksheet.insert_row([], 100)
 
     row_index = 2  # Индекс строки для группирования
@@ -81,9 +70,6 @@ def add_supplies_list(
 
         for sup_item in sup_items:
             worksheet.append_row(sup_item, value_input_option='USER_ENTERED')
-
-        print('Ждём минуту чтобы не превысить кол-во запросов')
-        time.sleep(61)
 
         change_row_height(worksheet, row_index - 1)
         worksheet.add_dimension_group_rows(row_index, row_index + len(sup_items))

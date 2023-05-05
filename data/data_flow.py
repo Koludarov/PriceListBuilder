@@ -1,4 +1,3 @@
-import time
 import textwrap
 from typing import List, Any, Dict, Set
 
@@ -16,11 +15,6 @@ def collect_categories(stocks: List) -> Any:
             supplies.add(stock_item['folder']['name'])
         elif stock_item['folder']['pathName'] == 'Номенклатура':
             category.add(stock_item['folder']['name'])
-            # Ламинирование и Брови имеют подкатегории, для которых не создаются отдельные листы
-        elif 'Ламинирование/' in stock_item['folder']['pathName']:
-            continue
-        elif 'Брови/' in stock_item['folder']['pathName']:
-            continue
         else:
             category.add(stock_item['folder']['pathName']
                          .replace('Номенклатура/', '').replace('/', '_').replace(' ', '_'))
@@ -69,12 +63,9 @@ def add_lists_categories(category: Set, sheet: gspread.spreadsheet.Spreadsheet) 
                 print(f"Ошибка при создании {category_item}. Описание: {error}")
                 exceptions_category.append(category_item)
                 delete_worksheet(category_item, sheet)
-                print('Ждём 2 минуты')
-                time.sleep(121)
+
         if category_item in exceptions_category:
             exceptions_category.remove(category_item)
 
-    # Ждём 2 минуты, чтобы прошло время с последнего запроса
-    time.sleep(121)
     # Удаляем Лист1, который создаётся автоматически
     delete_worksheet('Лист1', sheet)

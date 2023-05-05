@@ -14,7 +14,6 @@ def create_list(category_item, sheet: gspread.spreadsheet.Spreadsheet) -> None:
     change_size(worksheet)
 
 
-
 def change_size(worksheet: gspread.spreadsheet.Worksheet) -> None:
     """Задаёт высоту и ширину клеток в 200px"""
     sheet_id = worksheet._properties['sheetId']
